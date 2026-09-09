@@ -1,102 +1,277 @@
-# Git & GitHub
+# Lab 2 — Creating and Resolving a Merge Conflict
 
-Objective:  Familiarize yourself with essential Git and GitHub commands and workflows. Get hands-on practice with creating repositories, making commits, working with branches, and handling merge conflicts. 
+In this lab, you will practice using a course template repository, working with Git branches and pull requests, intentionally creating a merge conflict, and resolving that conflict.
 
-Submission: After following all of the instructions below, add me (byu-kerby) as a collaborator (under settings in GitHub) to your repository and add your repo's link below. Be sure to commit your changes and push to GitHub (if updating this locally).
+You will solve the same Python function in two different ways on two separate branches. After merging the first pull request, the second pull request should conflict with the updated `main` branch.
 
-Link: [Your GitHub Username Here](Your Link Here)
+---
 
-Instructions:  
+## 1. Generate your own Lab 2 Repository
 
-## Initializing a new repository
-1. Create an empty folder called `git_practice` in a sensible location on your computer. 
-2. Navigate into the new folder
-3. Initialize the folder as a git repository.  
-    * *Remember that every project should be its own git repository.*
-    * *Do NOT initialize root directories or parent folders relating to different projects*
-4. Verify that the .git folder is now in the directory.
+1. Navigate to the top right of this repository and click **Use this template** > **Create a new repository** to generate your personal lab environment.
+   
+2. Generate your repository, having the owner as **Stat386-Fall-2026** and Repository name as
+   **netid_lab_1**. Make sure you make a **private repository**.
 
-## Making your first commit
-1. Check the git status 
-2. Create a new file called `file_1.txt` 
-3. Create another new file called `file_2.txt` 
-4. Check the git status 
-5. Add both files to the staging area
-6. Check the git status
-7. Commit the new files using the commit message "create new files"
-8. Check the git status 
-9. Check the git log 
+## 2. Get the Lab 2 Repository
 
-## More git practicing
- 1. Open `file_1.txt` in a text editor.   Add the following to the file:
-    ```
-    This is my first file.
-    ```
-2. Open the the `file_2.txt` in a text editor.  Add the following to the file: 
-    ```
-    This is my second file.
-    ```
-3. Save the changes to both files.  Check the git status
-4. Add and commit only the changes from the `file_1.txt` file.  Check the git status.
-5. Make another commit with only the changes from the `file_2.txt` file.
-6. Check the git log
+Clone your Lab 2 repository to your computer.
 
-## Creating a Readme file
-1. Create a file called "Readme.md"
-2. Write a description of the repository with a title
-3. Add and commit the readme file.
-    
-## Creating a .gitignore
-1. Create a .gitignore file with the following text "api-keys.txt" 
-2. Add and commit the .gitignore file
-3. Create a file called "api-keys.txt" 
-4. Check the status of the git repo
-5. Add some text to the "api-keys.txt" file.  Save the changes and check the status. 
-6. IMPORTANT:  For best results, add all files that you want to ignore to the .gitignore file **before** any of the ignored files get committed. (Git will still track and push files that were committed before they were added to the .gitignore.)  
+```bash
+git clone <your-lab-2-repository-url>
+```
 
-## Creating branches
-1. Make a new branch called "features"
-2. Switch to the "features" branch
-3. Look at the log and notice where HEAD is
-4. Create a new file called `new_features.txt`
-5. Add and commit the new file with an appropriate commit message.
-6. Open `new_features.txt` in a text editor.   Add the following to the file:
-    ```
-    This file will have some new features.
-    ```
-7. Commit the changes to the current ("features") branch
+Move into the repository:
 
-## Merging
-1. Switch back to the main branch.  Notice the "new_features.txt" file is no longer in the directory. 
-2. Open "file_1.txt" and add a line of text to the file.  
-3. Commit the changes.
-4. Merge the main branch with the "features" branch.  (Your default editor should open to ask you for a commit message.  Type your message and close the file.) 
-5. Look at the git log.
+```bash
+cd <your-lab-2-repository-name>
+```
 
-## Handling Merge Conflicts
- 1. While on the main branch, open the `new_feature.txt` file and **replace** the old text with `No new features will be created.`  Save the changes. 
- 2. Add and commit the changes.
- 3. Switch back to the "features" branch.
- 4. Open the "new_features.txt" file and **replace** the old text with `This file has some new text`. Save the file.
- 5. Add and commit the changes on the features branch
- 6. Switch back to the main branch. 
- 7. Merge the main branch with the "features" branch.
- 8. You should get a merge conflict error and your default editor will open to have you resolve the conflict.
- 9. Resolve the conflict and commit the merge.
-10. Delete the `features` branch.
- 
-## Pushing to GitHub
-1. Login to GitHub and create a blank repository  called "Git_practice.  Do not initialize it with a readme file or a .gitignore file.
-2. Copy the SSH url (if you set up ssh keys).
-3. In your local repository, set the remote branch by typing `git remote add origin <ssh url>`
-4. Push the local repo up to GitHub by typing `git push -u origin main`
-5. Check that your GitHub repo was updated with your local work.
+Verify that Git recognizes the repository:
 
-## Pulling from GitHub
-1. Make changes to your Readme.md file **directly on GitHub**.
-2. Sync your remote changes by running `git pull` (locally).
-3. Verify that your changes were made.
+```bash
+git status
+```
 
-## Share with Me
-1. Add me (byu-kerby) as a collaborator to your repository.
-***
+You should now be working inside your local copy of the Lab 2 repository.
+
+---
+
+## 3. Review the Starter Code
+
+Open:
+
+```text
+src/analysis.py
+```
+
+You will work with the `get_word_counts()` function.
+
+The function should count word frequencies while excluding:
+
+```text
+the
+a
+and
+of
+to
+```
+
+You will solve this problem twice using two different approaches.
+
+---
+
+## 4. Create the First Branch
+
+Make sure you are starting from `main`:
+
+```bash
+git switch main
+git pull
+```
+
+Create your first branch:
+
+```bash
+git switch -c name_your_branch_1
+```
+
+On this branch, complete `get_word_counts()` using a new list.
+
+Your solution should:
+
+- split the text into words
+- create a list containing only words that should be counted
+- exclude `the`, `a`, `and`, `of`, and `to`
+- return a `Counter` containing the remaining word frequencies
+
+Run the program and make sure it works:
+
+```bash
+python src/analysis.py
+```
+
+Commit your changes:
+
+```bash
+git add .
+git commit -m "Solve word count using filtered list"
+```
+
+Push the branch:
+
+```bash
+git push origin name_your_branch_1
+```
+
+On GitHub, create a pull request from:
+
+```text
+name_your_branch_1 → main
+```
+
+**Do not merge this pull request yet.**
+
+---
+
+## 5. Create the Second Branch
+
+Return to `main`:
+
+```bash
+git switch main
+```
+
+Make sure you are still on the original starter version of the file. Do not merge or copy the changes from `name_your_branch_1`.
+
+Create a second branch:
+
+```bash
+git switch -c name_your_branch_2
+```
+
+Solve the same `get_word_counts()` problem again, but use a different approach.
+
+For this version:
+
+1. Split the text into words.
+2. Create a `Counter` from all of the words first.
+3. Remove `the`, `a`, `and`, `of`, and `to` from the resulting counts.
+4. Return the updated `Counter`.
+
+Run the program again:
+
+```bash
+python src/analysis.py
+```
+
+Commit the second solution:
+
+```bash
+git add .
+git commit -m "Solve word count using Counter"
+```
+
+Push the branch:
+
+```bash
+git push origin name_your_branch_2
+```
+
+On GitHub, create a second pull request from:
+
+```text
+name_your_branch_2 → main
+```
+
+At this point, both pull requests may still appear mergeable.
+
+---
+
+## 6. Generate the Merge Conflict
+
+Open the pull request for:
+
+```text
+name_your_branch_1 → main
+```
+
+Merge this pull request into `main`.
+
+Now return to the second pull request:
+
+```text
+name_your_branch_2 → main
+```
+
+Both branches started from the same original version of `get_word_counts()`, but they changed the same section of the function in different ways.
+
+Because the first version is now part of `main`, Git should report a merge conflict in the second pull request.
+
+---
+
+## 7. Resolve the Merge Conflict
+
+Open the conflicting version of:
+
+```text
+src/analysis.py
+```
+
+Compare the two implementations of `get_word_counts()`.
+
+Decide what the final version of the function should be. You may:
+
+- keep the first implementation
+- keep the second implementation
+- combine parts of both implementations
+
+The final function must:
+
+- exclude `the`, `a`, `and`, `of`, and `to`
+- return a `Counter`
+- contain only one working implementation
+- contain no merge conflict markers
+
+Commit the conflict resolution and complete the second pull request.
+
+---
+
+## 8. Verify the Final Program
+
+Make sure your local `main` branch contains the latest changes:
+
+```bash
+git switch main
+git pull
+```
+
+Run the final program:
+
+```bash
+python src/analysis.py
+```
+
+Confirm that:
+
+- the program runs without errors
+- the excluded words do not appear in the final word counts
+- `get_word_counts()` appears only once
+- no merge conflict markers remain
+
+---
+
+
+## 9. Create a Lab 2 Completion Issue
+
+After your final work has been pushed, go to the **Issues** tab of your Lab 2 repository.
+
+Create a new Issue using the **Lab 2 Complete** Issue template if it is available.
+
+Use the following information:
+
+**Title**
+
+```text
+Lab 2 complete
+```
+The description of this issue could be empty.
+
+# Generate a new comment in the issue
+Copy and paste this exact line into the comment box:
+
+```text
+@local-llm-user process config-dir: Lab_2/ in instructor-repo: Stat386-Fall-2026/Instructor_Repo
+```
+**Do not put the following command in the Issue description. It must be posted as a comment after the Issue has been created.**
+
+After you post the comment, the collaborator should respond with a message, after a minute or two, indicating that a job has been created. Once processing is finished (should take another couple of minutes), you should receive another comment indicating that the job has completed.
+
+The course collaborator should then create a new Issue titled: "Repository Review for lab02" that you can access from the Issues tab in the GitHub repository.
+
+This Issue will contain a few follow-up questions about your experience completing the lab.
+
+If the collaborator does not create the review Issue, or if you receive a job failure message, contact your TA or professor for help.
+
+# Answer questions
+Open the **Repository Review for lab02** Issue and answer the follow-up questions by posting your response as a comment.
