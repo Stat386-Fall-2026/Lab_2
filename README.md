@@ -95,7 +95,7 @@ Commit your changes:
 
 ```bash
 git add .
-git commit -m "Solve word count using filtered list"
+git commit -m "write your own message"
 ```
 
 Push the branch:
@@ -104,11 +104,16 @@ Push the branch:
 git push origin name_your_branch_1
 ```
 
+Navigate back to your repository home page on Github. Since you pushed recently, click the green Compare & pull request button shown banner at the top of the page.
+
+Alternatively, click the Pull requests tab at the top, then click the green New pull request button and select your branch from the compare: dropdown.
+
 On GitHub, create a pull request from:
 
 ```text
-name_your_branch_1 → main
+main <- name_your_branch_1
 ```
+
 
 **Do not merge this pull request yet.**
 
@@ -149,7 +154,7 @@ Commit the second solution:
 
 ```bash
 git add .
-git commit -m "Solve word count using Counter"
+git commit -m "write your own message"
 ```
 
 Push the branch:
@@ -161,7 +166,7 @@ git push origin name_your_branch_2
 On GitHub, create a second pull request from:
 
 ```text
-name_your_branch_2 → main
+main <- name_your_branch_2
 ```
 
 At this point, both pull requests may still appear mergeable.
@@ -173,7 +178,7 @@ At this point, both pull requests may still appear mergeable.
 Open the pull request for:
 
 ```text
-name_your_branch_1 → main
+main <- name_your_branch_1
 ```
 
 Merge this pull request into `main`.
@@ -181,7 +186,7 @@ Merge this pull request into `main`.
 Now return to the second pull request:
 
 ```text
-name_your_branch_2 → main
+main <- name_your_branch_2
 ```
 
 Both branches started from the same original version of `get_word_counts()`, but they changed the same section of the function in different ways.
